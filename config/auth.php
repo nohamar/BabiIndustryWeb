@@ -40,8 +40,19 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'client' => [
+        'driver' => 'session',
+        'provider' => 'clients',
     ],
+    'supplier' => [
+        'driver' => 'session',
+        'provider' => 'suppliers',
+    ],
+],
 
+   
+
+    
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -65,6 +76,14 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
+        'clients' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Client::class,
+    ],
+    'suppliers' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Supplier::class,
+    ], 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
