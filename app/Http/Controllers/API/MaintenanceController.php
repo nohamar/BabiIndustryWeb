@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,12 +33,14 @@ class MaintenanceController extends Controller
         $request->validate([
             'maintenance_date'=>'required|date', 
             'type'=>'required|string', 
+            'equipment_id' => 'required|exists:equipments,id',
         ]);
 
         $schedule = MaintenanceSchedule::create([
 
             'maintenance_date'=>$request->maintenance_date, 
             'type'=>$request->type, 
+              'equipment_id' => $request->equipment_id,
 
         ]); 
 
@@ -81,7 +83,7 @@ class MaintenanceController extends Controller
     {
           $schedule = MaintenanceSchedule::find($id); 
         if (!$schedule) {
-            return response->json([
+            return response()->json([
 'success' => false,
 'message' => 'Maintenance Schedule not found', 
             ], 404);
@@ -89,7 +91,7 @@ class MaintenanceController extends Controller
 
         $schedule->delete(); 
 
-        return response->json([
+        return response()->json([
            'success' => true, 
            'message' => 'Maintenace schedule deleted successfully', 
         ], 200);

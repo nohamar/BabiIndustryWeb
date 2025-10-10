@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Equipment; 
 
+
 class EquipmentController extends Controller
 {
     /**
@@ -33,17 +34,19 @@ class EquipmentController extends Controller
             'name'=>'required|string|max:255', 
             'description'=>'nullable|string', 
             'serial_number'=>'required|integer|unique:equipments,serial_number', 
-            'status'=>'required|string', 
+            'status'=>'required|string',
+             'supplier_id' => 'required|exists:suppliers,id',
+             'service_id' => 'required|exists:service_orders,id', 
         ]);
 
-        $equipment = Equipment::create([
-
-            'name'=>$request->name, 
-            'description'=>$request->description, 
-            'serial_number'=> $request->serial_number, 
-            'status' =>$request->status, 
-
-        ]); 
+     $equipment = Equipment::create([
+    'name' => $request->name,
+    'description' => $request->description,
+    'serial_number' => $request->serial_number,
+    'status' => $request->status,
+    'supplier_id' => $request->supplier_id,
+        'service_id' => $request->service_id,
+]);
 
         return response()->json([
             'message' => 'Equipment added successfully ', 
@@ -86,8 +89,11 @@ class EquipmentController extends Controller
         $request->validate([
              'name'=>'required|string|max:255', 
             'description'=>'nullable|string', 
-            'serial_number'=>'required|integer|unique', 
-            'status'=>'required|string', 
+            'serial_number'=>'required|integer', 
+            'status'=>'required|string',
+            'supplier_id' => 'required|exists:suppliers,id',
+        'service_id' => 'required|exists:service_orders,id', 
+             
         ]); 
         $equipment = Equipment::find($id); 
 
@@ -103,10 +109,14 @@ class EquipmentController extends Controller
           'name'=>$request->name, 
             'description'=>$request->description, 
             'serial_number'=> $request->serial_number, 
-            'status' =>$request->status,  
+            'status' =>$request->status, 
+             'supplier_id' => $request->supplier_id,
+        'service_id' => $request->service_id,
         ]); 
 
-        return response->json([
+        $equipment->save();
+
+        return response()->json([
             'success' => true, 
             'data' => $equipment, 
         ]);
@@ -123,7 +133,7 @@ class EquipmentController extends Controller
         
         $equipment = Equipment::find($id); 
         if (!$equipment) {
-            return response->json([
+            return response()->json([
 'success' => false,
 'message' => 'Equipment not found', 
             ], 404);
@@ -131,7 +141,7 @@ class EquipmentController extends Controller
 
         $equipment->delete(); 
 
-        return response->json([
+        return response()->json([
            'success' => true, 
            'message' => 'Equipment deleted successfully', 
         ], 200);

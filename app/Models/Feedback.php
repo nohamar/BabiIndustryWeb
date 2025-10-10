@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Feedback extends Model
 {
-    protected $fillable =['rating', 'comments']; 
+    protected $fillable =['rating', 'comments', 'client_id', 'service_id']; 
 
-     public function Client(): BelongsTo{
+     public function client(): BelongsTo{
         return $this->belongsTo(Client::class); 
     }
 
-    public function service_orders(): BelongsTo{
+    public function serviceOrder(): BelongsTo{
         return $this->belongsTo(ServiceOrder::class); 
     }
 }

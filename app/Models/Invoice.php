@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Invoice extends Model
 {
-    protected $fillable =['issue_date', 'total_number', 'status']; 
+    protected $fillable =['issue_date', 'total_number', 'status' , 'service_id']; 
 
- public function service_orders(): BelongsTo{
+ public function serviceOrder(): BelongsTo{
         return $this->belongsTo(ServiceOrder::class); 
     }
 

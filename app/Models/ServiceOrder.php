@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ServiceOrder extends Model
 {
-    protected $fillable=['service_date', 'status']; 
+    protected $fillable=['service_date', 'status', 'client_id']; 
 
-    public function Client(): BelongsTo{
+    public function client(): BelongsTo{
         return $this->belongsTo(Client::class); 
     }
 

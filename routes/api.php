@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\ClientAuthController;
-use App\Http\Controllers\API\SupplierAuthContoller;
+use App\Http\Controllers\API\SupplierAuthController;
 use App\Http\Controllers\API\EquipmentController;
 use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\InvoiceController;
@@ -20,10 +20,12 @@ Route::post("/registerClient", [ClientAuthController::class, "register"]);
 Route::post("/registerSupplier", [SupplierAuthController::class, "register"]); 
 
 Route::post("/loginClient", [ClientAuthController::class, "login"]); 
-Route::post("/loginSupplier", [SupplierAuthContoller::class, "login"]); 
+Route::post("/loginSupplier", [SupplierAuthController::class, "login"]); 
 
+Route::middleware('auth:sanctum')->group(function () {
 Route::post('/logoutClient', [ClientAuthController::class, 'logout']); 
-Route::post('/logoutSupplier', [SupplierAuthContoller::class, 'logout']); 
+Route::post('/logoutSupplier', [SupplierAuthController::class, 'logout']);
+});
 
 /** Equipments Routes  */
 Route::get('/equipments', [EquipmentController::class, 'index']); 
@@ -35,8 +37,7 @@ Route::delete('/equipments/{id}', [EquipmentController::class, 'destroy']);
 /** Maintenance Schedule Routes  */
 Route::get('/schedules', [MaintenanceController::class, 'index']); 
 Route::post('/schedules', [MaintenanceController::class, 'store']); 
-Route::get('/schedules/{id}', [MaintenanceController::class, 'show']);
-Route::put('/schedules/{id}', [MaintenanceController::class, 'update']); 
+Route::get('/schedules/{id}', [MaintenanceController::class, 'show']); 
 Route::delete('/schedules/{id}', [MaintenanceController::class, 'destroy']); 
 
 /** Feedback Routes  */

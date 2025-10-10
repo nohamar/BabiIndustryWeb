@@ -14,16 +14,18 @@ class ClientAuthController extends Controller
 
         $request->validate([
          'first_name'=> 'required|string|max:255', 
-         'second_name'=>'required|string|max:255', 
+         'last_name'=>'required|string|max:255', 
          'number'=>'required|string|max:20', 
          'email'=>'required|email|string|max:255|unique:clients,email', 
          'password'=> 'required|string|min:10|confirmed', 
          'birthday'=>'nullable|date', 
         ]);
 
+
+
         $client = \App\Models\Client::create([
         'first_name'=> $request->first_name, 
-        'second_name'=>$request->second_name, 
+        'last_name'=>$request->last_name, 
         'number'=>$request->number, 
         'email'=>$request->email, 
         'password'=> bcrypt($request->password), 

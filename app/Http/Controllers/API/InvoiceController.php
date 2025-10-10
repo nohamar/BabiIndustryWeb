@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Invoice; 
+use App\Models\Invoice;  
 
 class InvoiceController extends Controller
 {
@@ -38,15 +38,17 @@ class InvoiceController extends Controller
 
             'issue_date'=> 'required|date', 
             'total_number' => 'required|integer',
-            'status'=> 'required|string|max:255'
+            'status'=> 'required|string|max:255', 
+               'service_id' => 'required|exists:service_orders,id',
         ]);
 
+       
         $invoice = Invoice::create([
 
             'issue_date'=>$request->issue_date, 
             'total_number'=>$request->total_number, 
-            'status'=>$request->status
-
+            'status'=>$request->status,
+            'service_id' => $request->service_id,
         ]); 
 
         return response()->json([

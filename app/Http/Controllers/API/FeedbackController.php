@@ -36,14 +36,18 @@ class FeedbackController extends Controller
     {
         $request->validate([
 
-            'rating'=>'nullable|string|min:1|max:10', 
+            'rating'=>'nullable|integer|min:1|max:10', 
             'comments'=>'required|string|max:25000',  
+            'client_id' => 'required|exists:clients,id',
+        'service_id' => 'required|exists:service_orders,id',
         ]);
 
         $feedback = Feedback::create([
 
             'rating'=>$request->rating, 
-            'comments'=>$request->comments, 
+            'comments'=>$request->comments,
+              'client_id' => $request->client_id,
+        'service_id' => $request->service_id, 
 
         ]); 
 
@@ -85,7 +89,10 @@ class FeedbackController extends Controller
     {
        $request->validate([
              'rating'=>'nullable|min:1|max:10', 
-            'comments'=>'required|string|max:25000', 
+            'comments'=>'required|string|max:25000',
+            'client_id' => 'required|exists:clients,id',
+        'service_id' => 'required|exists:service_orders,id', 
+            
         ]); 
         $feedback = Feedback::find($id); 
 
@@ -100,9 +107,11 @@ class FeedbackController extends Controller
         $feedback->update([
           'rating'=>$request->rating, 
             'comments'=>$request->comments,
+            'client_id' => $request->client_id,
+        'service_id' => $request->service_id,
         ]); 
 
-        return response->json([
+        return response()->json([
             'success' => true, 
             'data' => $feedback, 
         ]);
@@ -115,7 +124,7 @@ class FeedbackController extends Controller
     {
           $feedback = Feedback::find($id); 
         if (!$feedback) {
-            return response->json([
+            return response()->json([
 'success' => false,
 'message' => 'Feedback not found', 
             ], 404);
@@ -123,7 +132,7 @@ class FeedbackController extends Controller
 
         $feedback->delete(); 
 
-        return response->json([
+        return response()->json([
            'success' => true, 
            'message' => 'Feedback deleted successfully', 
         ], 200);

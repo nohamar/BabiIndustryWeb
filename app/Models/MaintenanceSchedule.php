@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class MaintenanceSchedule extends Model
 {
-    protected $fillable =['maintenance_date', 'type']; 
+    protected $fillable =['maintenance_date', 'type', 'equipment_id']; 
 
       public function equipment(): BelongsTo{
         return $this->belongsTo(Equipment::class); 

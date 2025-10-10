@@ -13,9 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Client extends Model
 {
     use HasFactory, Notifiable, HasApiTokens;
-    protected $fillable = ['first_name', 'second_name', 'number', 'email', 'password', 'birthday'];
+    protected $fillable = ['first_name', 'last_name', 'number', 'email', 'password', 'birthday'];
 
-    public function service_orders(): HasMany{
+    public function serviceOrders(): HasMany{
         return $this->hasMany(ServiceOrder::class); 
     }
 

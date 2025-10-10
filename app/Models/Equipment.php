@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Equipment extends Model
 {
-    protected $fillable = ['name', 'description', 'serial_number', 'status']; 
+      protected $table = 'equipments'; 
+    protected $fillable = ['name', 'description', 'serial_number', 'status', 'service_id', 'supplier_id']; 
 
-    public function serviceorders(): BelongsTo{
+    public function serviceOrder(): BelongsTo{
         return $this->belongsTo(ServiceOrder::class); 
     }
 
@@ -20,7 +21,7 @@ class Equipment extends Model
     }
 
 
-    public function maintenance_schedules(): HasMany{
+    public function maintenanceSchedules(): HasMany{
         return $this->hasMany(MaintenanceSchedule::class); 
     }
 

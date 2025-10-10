@@ -31,12 +31,17 @@ class ServiceOrderController extends Controller
               $request->validate([
             'service_date'=>'required|date', 
             'status'=>'required|string', 
+            'client_id' => 'required|exists:clients,id',
         ]);
+
+        
 
         $service_order = ServiceOrder::create([
 
             'service_date'=>$request->service_date, 
             'status'=>$request->status, 
+            'client_id' =>$request->client_id,
+
 
         ]); 
 
